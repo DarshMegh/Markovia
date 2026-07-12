@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Markovia — AI Text Generator</title>
+<meta name="description" content="A from-scratch Markov chain text generator — statistical AI that predicts the next word from context, running entirely in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">¶</span>
+      <span class="brand-name">Markovia</span>
+    </div>
+    <p class="brand-tag">A statistical AI text generator — no neural network, no pretrained model. It predicts the next word purely from how often that word followed the same context in your text, entirely in your browser.</p>
+  </header>
+
+  <main class="layout">
+
+    <!-- LEFT: Input + controls -->
+    <aside class="panel controls-panel">
+
+      <section class="control-group">
+        <h2 class="control-title">Corpus</h2>
+        <p class="control-hint">Paste any text — the model learns its patterns from this.</p>
+        <textarea id="corpusInput" class="corpus-area" rows="10" spellcheck="false"></textarea>
+        <div class="corpus-actions">
+          <button class="btn btn-outline" id="loadSampleBtn">Load sample text</button>
+          <span class="token-count" id="tokenCount">0 words</span>
+        </div>
+      </section>
+
+      <section class="control-group">
+        <h2 class="control-title">Model</h2>
+        <label class="control-label">Order (context length) <span class="control-value" id="orderValue">2</span></label>
+        <input type="range" id="orderSlider" min="1" max="4" step="1" value="2">
+        <p class="control-hint" id="orderHint">Each word is predicted from the 2 word(s) before it.</p>
+
+        <div class="chip-row" style="margin-top:14px;">
+          <button class="chip active" data-mode="creative">Creative</button>
+          <button class="chip" data-mode="predictable">Predictable</button>
+        </div>
+        <p class="control-hint" id="modeHint">Creative samples randomly, weighted by how often each word actually followed this context.</p>
+      </section>
+
+      <section class="control-group">
+        <h2 class="control-title">Output</h2>
+        <label class="control-label">Length <span class="control-value" id="lengthValue">60</span> words</label>
+        <input type="range" id="lengthSlider" min="10" max="200" step="5" value="60">
+
+        <button class="btn btn-primary btn-block" id="buildBtn" style="margin-top:16px;" disabled>Build model from corpus</button>
+        <button class="btn btn-primary btn-block" id="generateBtn" style="margin-top:10px;" disabled>Generate text</button>
+      </section>
+
+      <p class="model-status" id="modelStatus">Paste text and click "Build model" to begin.</p>
+    </aside>
+
+    <!-- RIGHT: Output -->
+    <section class="panel output-panel">
+      <div class="output-head">
+        <h2 class="panel-title">Generated text</h2>
+        <button class="btn btn-ghost" id="copyOutputBtn">Copy</button>
+      </div>
+      <div class="output-box" id="outputBox">
+        <p class="output-placeholder">Your generated text will appear here.</p>
+      </div>
+
+      <div class="prediction-panel">
+        <h3 class="prediction-title">What the model is "thinking"</h3>
+        <p class="prediction-hint">The last context used during generation, and every word that could have come next — with how likely each one was.</p>
+        <div class="prediction-context" id="predictionContext">—</div>
+        <div class="prediction-bars" id="predictionBars"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="markov.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
