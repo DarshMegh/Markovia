@@ -2,8 +2,6 @@
 
 A statistical AI text generator built entirely from scratch — no neural network, no pretrained model, no external API. Paste any text, and Markovia learns a **Markov chain**: for every sequence of words, it remembers what word actually came next, how often, and uses that to generate new text in a similar style.
 
-**[Live Demo](#)** — replace this with your GitHub Pages link after deploying (steps below)
-
 ![Markovia preview](https://via.placeholder.com/900x500/17140F/E8A33D?text=Markovia+%E2%80%94+AI+Text+Generator)
 
 ## Features
